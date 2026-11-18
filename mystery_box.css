@@ -1,0 +1,68 @@
+
+/* Each mystery card */
+.mcard {
+  position: relative;
+  min-width: 0;
+}
+
+/* Flip container */
+.mc {
+  perspective: 1200px;
+}
+
+.mi {
+  position: relative;
+  width: 100%;
+  min-height: 430px;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+/* Card faces */
+.mf {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 430px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow-y: auto;
+}
+
+/* Front */
+.mfront {
+  transform: rotateY(0deg);
+}
+
+/* Passage or picture */
+.mreveal {
+  transform: rotateY(180deg);
+}
+
+/* Questions */
+.mqs {
+  transform: rotateY(180deg);
+  display: none;
+}
+
+/* First click: open content */
+.m:checked ~ .mc .mi {
+  transform: rotateY(180deg);
+}
+
+/* Second click: reveal questions */
+.qq:checked ~ .mc .mi {
+  transform: rotateY(360deg);
+}
+
+/* Hide content when questions are shown */
+.qq:checked ~ .mc .mi .mreveal {
+  visibility: hidden;
+}
+
+/* Show questions */
+.qq:checked ~ .mc .mi .mqs {
+  display: block;
+}

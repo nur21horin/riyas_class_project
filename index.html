@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classroom Activity Wheel 🎡</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Add any custom styles here */
+
+/* WHEEL BUTTON */
+.hub {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 27%;
+  height: 27%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: white;
+  border: 5px solid var(--purple);
+  font-family: inherit;
+  font-weight: 900;
+  font-size: clamp(.6rem, 2.4vw, .95rem);
+  line-height: 1.2;
+  color: var(--purple);
+  cursor: pointer;
+  z-index: 10;
+  transition: .25s;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.hub:hover {
+  background: var(--purple);
+  color: white;
+}
+
+.hub:disabled {
+  cursor: wait;
+  opacity: .7;
+}
+
+/* WHEEL SPIN */
+.wheel {
+  transition: transform 4s cubic-bezier(.12,.8,.32,1);
+  will-change: transform;
+}
+
+/* SPIN RESULT */
+.result {
+  text-align: center;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  border-radius: 16px;
+  background: white;
+  box-shadow: var(--shadow);
+  font-weight: 700;
+}
+
+#result-link {
+  display: none;
+  color: var(--purple);
+  text-decoration: none;
+}
+
+#result-link u {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+#result-link:hover {
+  color: var(--coral);
+}
+
+/* Classroom Activity Wheel – CSS only (no JavaScript) */
+:root{
+  --bg:#fff8ec; --ink:#26264a; --muted:#5d5d80; --white:#fff;
+  --coral:#f0626f; --indigo:#4b5de4; --emerald:#1fae7a; --gold:#f5b72e; --purple:#7a4de6; --orange:#ff8a3d;
+  --radius:22px; --shadow:0 10px 30px rgba(60,50,120,.15);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;line-height:1.55}
+a{color:inherit}
+.sr{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+section{scroll-margin-top:70px}
+
+
+/* MYSTERY 02 - GOLDEN ORANGE COLOR */
+.mc2 {
+  --c: #ff9f1c;
+}
+
+/* Golden orange mystery box front */
+.mc2 .mfront {
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255,255,255,.35),
+      transparent 45%
+    ),
+    #ff9f1c;
+  border-color: #ffd166;
+}
+
+/* Golden orange buttons */
+.mc2 .mlink {
+  background: #ff9f1c;
+  color: #241300;
+}
+
+/* Golden orange border */
+.mc2 .mf {
+  border-color: #ff9f1c;
+}
+
+/* HERO */
+.hero{text-align:center;padding:4rem 1.2rem 3rem;background:radial-gradient(circle at 15% 20%,#dfe6ff 0,transparent 40%),radial-gradient(circle at 85% 30%,#ffe3d1 0,transparent 40%),radial-gradient(circle at 50% 100%,#d6f5e8 0,transparent 45%)}
+.pill{display:inline-block;margin:0 0 1rem;padding:.35rem 1rem;border-radius:99px;background:var(--white);box-shadow:var(--shadow);font-weight:700;color:var(--indigo);font-size:.9rem}
+h1{margin:.2rem 0;font-size:clamp(2rem,6vw,3.6rem);color:var(--purple)}
+.tagline{font-size:clamp(1.1rem,3vw,1.5rem);font-weight:800;color:var(--orange);margin:.3rem 0}
+.topic{color:var(--muted)}
+.flow{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;padding:0;margin:1.5rem 0}
+.flow li{background:var(--white);padding:.4rem .9rem;border-radius:99px;font-size:.85rem;font-weight:700;box-shadow:var(--shadow);counter-increment:s}
+.flow li::before{content:counter(s) ". ";color:var(--emerald)}
+.flow{counter-reset:s}
+.btn{display:inline-block;padding:.8rem 1.6rem;border-radius:99px;background:linear-gradient(135deg,var(--purple),var(--indigo));color:#fff;font-weight:800;text-decoration:none;box-shadow:var(--shadow);transition:.25s}
+.btn:hover{transform:translateY(-3px) scale(1.04)}
+
+/* PANELS */
+.panel{max-width:1000px;margin:2.5rem auto;padding:0 1.2rem}
+.panel h2{font-size:clamp(1.5rem,4vw,2.1rem);margin:0 0 .3rem;color:var(--indigo);text-align:center}
+.sub{text-align:center;color:var(--muted)}
+
+/* WHEEL */
+.wheel-wrap{position:relative;width:min(88vw,460px);aspect-ratio:1;margin:2.2rem auto 1.5rem}
+.pointer{position:absolute;top:-22px;left:50%;transform:translateX(-50%);z-index:5;width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:36px solid var(--ink);filter:drop-shadow(0 3px 3px rgba(0,0,0,.3))}
+.wheel{position:relative;width:100%;height:100%;border-radius:50%;border:10px solid var(--white);box-shadow:var(--shadow),0 0 0 6px var(--purple);
+  background:conic-gradient(from -45deg,var(--coral) 0 25%,var(--indigo) 0 50%,var(--emerald) 0 75%,var(--gold) 0 100%);
+  transition:transform 2.5s cubic-bezier(.2,.8,.2,1)}
+/* Decorative spin: checkbox #spin checked -> two full turns (ends in the same position) */
+#spin:checked ~ .wheel-wrap .wheel{transform:rotate(720deg)}
+#spin:focus-visible ~ .wheel-wrap .hub{outline:3px solid var(--ink)}
+.slice{position:absolute;width:32%;display:flex;flex-direction:column;align-items:center;text-align:center;font-weight:800;font-size:clamp(.72rem,2.6vw,1rem);color:#fff;text-decoration:none;text-shadow:0 1px 3px rgba(0,0,0,.35);transition:.25s;z-index:2}
+.slice span{font-size:clamp(1.5rem,6vw,2.4rem)}
+.slice:hover{transform:scale(1.18)}
+.s1{top:9%;left:34%}.s3{bottom:9%;left:34%}.s2{right:3%;top:38%}.s4{left:3%;top:38%}
+.s4{color:var(--ink);text-shadow:none}
+.hub{position:absolute;inset:0;margin:auto;width:27%;height:27%;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--white);border:5px solid var(--purple);font-weight:900;font-size:clamp(.6rem,2.4vw,.95rem);color:var(--purple);cursor:pointer;z-index:3;transition:.25s;animation:pulse 2s ease-in-out infinite}
+.hub:hover{background:var(--purple);color:#fff}
+@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(122,77,230,.18)}}
+
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+.lg{display:block;padding:1rem 1.2rem;border-radius:var(--radius);background:var(--white);box-shadow:var(--shadow);text-decoration:none;border-top:6px solid;transition:.25s}
+.lg small{display:block;color:var(--muted);margin-top:.3rem}
+.lg:hover{transform:translateY(-6px)}
+.c1{border-color:var(--coral)}.c2{border-color:var(--indigo)}.c3{border-color:var(--emerald)}.c4{border-color:var(--gold)}
+
+/* ACTIVITIES: only the :target one is visible */
+.activity{display:none}
+.activity:target{display:block;animation:rise .5s ease}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+.placeholder{text-align:center;background:var(--white);padding:2rem 1rem;border-radius:var(--radius);box-shadow:var(--shadow);border:2px dashed var(--purple)}
+.stage:has(.activity:target) .placeholder{display:none}
+.activity{scroll-margin-top:70px}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;margin:1rem 0}
+.meta h3{margin:0;flex:1 1 auto}
+.tag{padding:.25rem .8rem;border-radius:99px;color:#fff;font-size:.8rem;font-weight:800;background:var(--coral)}
+.tag.c2{background:var(--indigo)}.tag.c3{background:var(--emerald)}.tag.c4{background:var(--gold);color:var(--ink)}
+.back{display:inline-block;padding:.35rem .9rem;border-radius:99px;background:var(--white);border:2px solid var(--purple);color:var(--purple);font-weight:800;text-decoration:none;font-size:.9rem;transition:.25s}
+.back:hover{background:var(--purple);color:#fff}
+
+/* FLIP CARD (checkbox + label) */
+.card{perspective:1400px}
+.inner{display:grid;position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.4,.2,.2,1)}
+.flip-toggle:checked + .card .inner{transform:rotateY(180deg)}
+.flip-toggle:focus-visible + .card .front{outline:3px solid var(--purple)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);background:var(--white);border-top:8px solid var(--coral)}
+#a2 .face{border-color:var(--indigo)}#a3 .face{border-color:var(--emerald)}#a4 .face{border-color:var(--gold)}
+.front{cursor:pointer;display:block;transition:box-shadow .25s}
+.front:hover{box-shadow:0 14px 40px rgba(122,77,230,.3)}
+.back{transform:rotateY(180deg);display:block;background:#fdfcff;border-radius:var(--radius);border-width:8px 0 0}
+.face h4{margin:0 0 .5rem;font-size:1.35rem}
+.instr{background:#eef1ff;border-left:5px solid var(--indigo);padding:.6rem .9rem;border-radius:10px;font-weight:700;color:var(--indigo)}
+blockquote{margin:1rem 0;padding:1rem 1.2rem;background:#fffbe9;border-radius:14px;font-size:1.08rem;line-height:1.8}
+.front svg{display:block;width:100%;max-height:340px;margin:1rem 0;border-radius:16px;border:3px solid #eee}
+.cta{display:inline-block;margin:.5rem 0;padding:.7rem 1.4rem;border-radius:99px;background:linear-gradient(135deg,var(--orange),var(--coral));color:#fff;font-weight:800;cursor:pointer;animation:bounce 1.8s infinite;transition:.25s}
+.cta:hover{transform:scale(1.06)}
+.back .cta{animation:none;background:linear-gradient(135deg,var(--emerald),var(--indigo));margin-right:.5rem}
+@keyframes bounce{50%{transform:translateY(-5px)}}
+
+/* QUESTIONS */
+fieldset{border:2px solid #e6e6f5;border-radius:14px;margin:0 0 .8rem;padding:.7rem 1rem}
+legend{font-weight:800;padding:0 .4rem}
+fieldset label{display:block;padding:.35rem .5rem;border-radius:8px;cursor:pointer;transition:.2s}
+fieldset label:hover{background:#eef1ff}
+fieldset label:has(input:checked){background:#d9f5e9;font-weight:700}
+input[type=radio]{accent-color:var(--purple);margin-right:.5rem}
+input[type=text]{width:100%;padding:.6rem .8rem;border:2px solid #d6d6ec;border-radius:10px;font:inherit}
+input[type=text]:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(122,77,230,.2)}
+
+/* REVIEW */
+details{background:var(--white);border-radius:16px;box-shadow:var(--shadow);margin:.8rem 0;padding:.8rem 1.2rem}
+summary{cursor:pointer;font-weight:800;color:var(--emerald)}
+#review{text-align:center}#review details{text-align:left}#review .btn{margin-top:1rem}
+
+/* TEACHER */
+.teacher{background:linear-gradient(135deg,#efe9ff,#e3f7ef);padding:1.5rem 1.2rem;border-radius:var(--radius)}
+.note{background:#fff3d6;border-left:5px solid var(--orange);padding:.7rem 1rem;border-radius:10px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.tcard{background:var(--white);padding:1rem;border-radius:16px;box-shadow:var(--shadow)}
+.tcard h5{margin:0 0 .6rem;color:var(--purple);font-size:1rem}
+.field{border:2px dashed #c5c5e6;border-radius:10px;padding:.5rem .7rem;margin:.4rem 0;background:#fafaff;font-size:.9rem}
+code{background:#eee;padding:0 .3rem;border-radius:4px}
+footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-weight:700}
+
+@media (max-width:600px){
+  .face{padding:1rem}
+  .nav{justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+
+/* ===== THE MYSTERY ROOM (CSS only; no sound, because sound needs JavaScript) ===== */
+.next{text-align:center;margin-top:1.5rem}
+.mr{background:#000;padding:3rem 1rem;position:relative;overflow:hidden;scroll-margin-top:60px;margin-top:2.5rem}
+.mr::before,.mr::after{content:"";position:absolute;inset:-50px 0;pointer-events:none;opacity:.7;
+  background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(2px 2px at 120px 90px,#ffd23f,transparent),radial-gradient(3px 3px at 200px 40px,#ff7ac8,transparent),radial-gradient(2px 2px at 70px 160px,#5eead4,transparent);
+  background-size:240px 200px;animation:drift 14s linear infinite}
+.mr::after{background-size:330px 270px;opacity:.5;animation:drift2 22s linear infinite reverse}
+@keyframes drift{to{background-position:0 -400px}}
+@keyframes drift2{to{background-position:0 -540px}}
+.mr-box{position:relative;z-index:1;max-width:920px;margin:auto;background:#2a1450;border-radius:32px;padding:2rem 1.2rem;text-align:center;box-shadow:0 0 60px rgba(139,61,255,.35);color:#fff}
+.mr-box h2{margin:0;color:#ffd23f;font-size:clamp(1.7rem,6vw,2.8rem);letter-spacing:.06em;text-shadow:0 0 20px rgba(255,210,63,.45)}
+.mr-sub{color:#e8d9ff;letter-spacing:.18em;font-weight:700;font-size:clamp(.7rem,2.4vw,.95rem)}
+.mr-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.8rem 0}
+.mr-ask{font-size:1.4rem;font-weight:800;color:#ffd23f;margin:.5rem 0 0}
+.mr-think{letter-spacing:.15em;color:#e8d9ff;margin-bottom:1.2rem}
+.mcard{position:relative;--c:#8b3dff}.mc2{--c:#ff4fa3}.mc3{--c:#ff8a2b}.mc4{--c:#14b8a6}
+.mc{perspective:1200px;transition:transform .3s}
+.mcard:hover .mc{transform:translateY(-8px)}
+.mi{display:grid;height:450px;position:relative;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.4,.2,.2,1)}
+.mf{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;overflow:auto;padding:1.1rem;text-align:left;color:#fff;background:#1b0b33;border:3px solid var(--c);transition:box-shadow .3s}
+.mcard:hover .mf{box-shadow:0 0 0 3px var(--c),0 0 34px var(--c)}
+.mfront{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;text-align:center;cursor:pointer;border-color:rgba(255,255,255,.5);background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 45%),var(--c)}
+.gift{font-size:4.5rem;animation:float 2.4s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+@keyframes float{50%{transform:translateY(-10px) rotate(-6deg)}}
+.mfront b{font-size:1.4rem;letter-spacing:.1em}.mfront small{font-weight:700;opacity:.92}
+.mreveal{transform:rotateY(180deg);pointer-events:none}
+.mqs{opacity:0;pointer-events:none;transition:opacity 0s .4s}
+.mfront{transition:opacity 0s .4s}
+/* flip 1: checkbox .m -> 180deg. flip 2: .m + .qq -> 360deg, then swap faces at the half-way point */
+.m:checked ~ .mc .mi{transform:rotateY(180deg)}
+.m:checked ~ .qq:checked ~ .mc .mi{transform:rotateY(360deg)}
+.m:checked ~ .mc .mreveal{pointer-events:auto}
+.m:checked ~ .qq:checked ~ .mc .mreveal{pointer-events:none}
+.m:checked ~ .qq:checked ~ .mc .mfront{opacity:0;pointer-events:none}
+.m:checked ~ .qq:checked ~ .mc .mqs{opacity:1;pointer-events:auto}
+.m:focus-visible ~ .mc .mfront{outline:3px solid #fff}
+.mr h4{margin:.3rem 0;color:#ffd23f;font-size:1.25rem}.mr h5{margin:.5rem 0 0;font-size:1rem}
+.mtag{display:inline-block;padding:.2rem .7rem;border-radius:99px;background:var(--c);font-size:.75rem;font-weight:800}
+.mr .instr{background:#3b2266;border-left-color:#ffd23f;color:#ffe9a6;font-size:.9rem}
+.mr blockquote{background:#2f1857;color:#fff;font-size:.95rem;line-height:1.65;padding:.8rem;margin:.5rem 0}
+.mr svg{display:block;width:100%;max-height:200px;margin:.5rem 0;border-radius:12px}
+.mbtn,.mlink{display:inline-block;margin:.3rem .3rem 0 0;padding:.55rem 1.1rem;border-radius:99px;font-weight:800;cursor:pointer;text-decoration:none;font-size:.9rem;transition:.25s}
+.mbtn{background:var(--c);color:#fff;box-shadow:0 0 16px var(--c)}
+.mlink{border:2px solid var(--c);color:#fff}
+.mbtn:hover,.mlink:hover{transform:scale(1.07);background:var(--c)}
+.mr fieldset{border-color:#4a2a7a}.mr legend{color:#fff;font-size:.92rem}
+.mr fieldset label{font-size:.9rem}.mr fieldset label:hover{background:#3b2266}
+.mr fieldset label:has(input:checked){background:#5b2fa0;color:#fff}
+.mr input[type=text]{background:#2f1857;color:#fff;border-color:#5b2fa0}
+/* Completion: both multiple-choice answers correct (:has) + short answer matches its pattern (:valid) */
+.win{display:none;position:sticky;top:0;z-index:3;text-align:center;font-weight:900;font-size:1.3rem;color:#1b0b33;background:#ffd23f;border-radius:14px;padding:.5rem;margin-bottom:.6rem;animation:pop .6s}
+.mqs:has(.q1 .ok:checked):has(.q2 .ok:checked):has(.q3 input:valid) .win{display:block}
+
+/* Mystery 02 passage styling */
+
+.passage-box {
+  background: #fff8e7;
+  border-left: 4px solid #f59e0b;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 15px 0;
+}
+
+.passage-box blockquote {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #49351a;
+  font-weight: 500;
+}
+
+.question-heading {
+  margin-top: 18px;
+}
+
+.mqs textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 9px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.answer-hint {
+  background: #f0eaff;
+  color: #6633a5;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+/* Photo interaction */
+
+.photo-next {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin: 15px auto;
+}
+
+.photo-next img {
+  width: 100%;
+  max-width: 320px;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.photo-next img:hover {
+  transform: scale(1.04);
+}
+
+.photo-next span {
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Question Stage */
+.mc2 .question-stage {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  gap: 15px;
+}
+
+/* Question Heading */
+.mc2 .question-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: #7c3aed;
+  text-align: center;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+/* Question Text */
+.mc2 .question-stage h3 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: inherit;
+  margin: 10px 0;
+}
+
+/* Question Navigation */
+.mc2 .question-stage .mlink {
+  cursor: pointer;
+}
+
+/* Question Stage */
+.mc2 .question-stage {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  gap: 15px;
+}
+
+/* Question Heading */
+.mc2 .question-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffd23f;
+  text-align: center;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+/* Show Question */
+.mc2 #mq2q:checked ~ .mc .mi .question-stage {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mc2 #mq2q:checked ~ .mc .mi .mqs {
+  display: none;
+}
+
+
+/* =====================================
+   MYSTERY 02 - FOUR STAGE FLIP SYSTEM
+   HTML + CSS ONLY
+===================================== */
+
+.mc2 .mi {
+  display: grid;
+  height: 450px;
+  position: relative;
+  transform: none !important;
+  transform-style: preserve-3d;
+  transition: none;
+}
+
+.mc2 .mf {
+  grid-area: 1 / 1;
+  min-width: 0;
+  width: 100%;
+  height: 450px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 1.1rem;
+  overflow-y: auto;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: rotateY(-180deg);
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  transition:
+    transform 0.7s ease,
+    opacity 0.5s ease;
+}
+
+/* STAGE 1: MYSTERY BOX */
+.mc2 .mfront {
+  opacity: 1;
+  pointer-events: auto;
+  transform: rotateY(0deg);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255,255,255,.35),
+      transparent 45%
+    ),
+    var(--c);
+}
+
+/* STAGE 2: PHOTO */
+.mc2 .m:checked ~ .mc .mfront {
+  opacity: 0;
+  pointer-events: none;
+  transform: rotateY(180deg);
+}
+
+.mc2 .m:checked ~ .mc .mreveal {
+  opacity: 1;
+  pointer-events: auto;
+  transform: rotateY(0deg);
+}
+
+/* STAGE 3: PASSAGE */
+.mc2 .qq:checked ~ .mc .mreveal {
+  opacity: 0;
+  pointer-events: none;
+  transform: rotateY(180deg);
+}
+
+.mc2 .qq:checked ~ .mc .mqs {
+  opacity: 1;
+  pointer-events: auto;
+  transform: rotateY(0deg);
+}
+
+/* STAGE 4: FINAL QUESTION */
+.mc2 .qqq:checked ~ .mc .mqs {
+  opacity: 0;
+  pointer-events: none;
+  transform: rotateY(180deg);
+}
+
+.mc2 .qqq:checked ~ .mc .question-stage {
+  opacity: 1;
+  pointer-events: auto;
+  transform: rotateY(0deg);
+}
+
+/* PHOTO */
+.mc2 .photo-next {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.mc2 .photo-next img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+  border-radius: 15px;
+}
+
+.mc2 .photo-next span {
+  color: white;
+  font-weight: bold;
+}
+
+/* NEXT QUESTION */
+.mc2 .next-question {
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* PASSAGE AND QUESTION */
+.mc2 .passage-box {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 15px;
+  background: rgba(255,255,255,.1);
+}
+
+.mc2 .question-heading {
+  text-align: center;
+  color: white;
+}
+
+/* CLICKABLE LINKS */
+.mc2 .mlink {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: var(--c);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+/* MYSTERY 04 - TEAL COLOR */
+.mc4 {
+  --c: #00b8a9;
+}
+
+/* MYSTERY 04 - PHOTO TO FINAL QUESTION */
+.mc4 .qq:checked ~ .mc .mreveal {
+  opacity: 0;
+  pointer-events: none;
+  transform: rotateY(180deg);
+}
+
+.mc4 .qq:checked ~ .mc .question-stage {
+  opacity: 1;
+  pointer-events: auto;
+  transform: rotateY(0deg);
+}
+
+
+:root {
+  --primary: #2563EB;
+  --primary-dark: #1D4ED8;
+  --purple: #7C3AED;
+  --purple-light: #F3E8FF;
+  --blue-light: #EFF6FF;
+  --green: #059669;
+  --green-light: #ECFDF5;
+  --bg: #F1F5F9;
+  --text: #0F172A;
+  --muted: #475569;
+  --border: #CBD5E1;
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* HEADER */
+.top-bar {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.05);
+}
+
+.title-group h1 {
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 800;
+}
+
+.title-group p {
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 30px;
+  font-size: .8rem;
+  margin-right: 6px;
+}
+
+/* TIMER */
+.timer-box {
+  background: #0F172A;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timer-time {
+  color: #38BDF8;
+  font-size: 1.7rem;
+  font-weight: 800;
+  min-width: 75px;
+  text-align: center;
+}
+
+.timer-time.warning {
+  color: #FBBF24;
+}
+
+.timer-time.done {
+  color: #F87171;
+}
+
+.timer-btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-start {
+  background: #10B981;
+  color: white;
+}
+
+.btn-reset {
+  background: #475569;
+  color: white;
+}
+
+/* MAIN LAYOUT */
+.activity-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+@media(max-width: 850px) {
+  .activity-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* PASSAGE */
+.passage-card {
+  background: var(--blue-light);
+  border: 3px solid #60A5FA;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(37,99,235,.08);
+}
+
+.passage-header {
+  text-align: center;
+  border-bottom: 2px dashed #60A5FA;
+  padding-bottom: 15px;
+  margin-bottom: 18px;
+}
+
+.passage-header h2 {
+  color: #1D4ED8;
+  font-size: 1.6rem;
+}
+
+.passage-header p {
+  color: #1E40AF;
+  font-weight: 700;
+}
+
+.passage-text {
+  background: white;
+  border: 2px solid #BFDBFE;
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 1.12rem;
+  line-height: 1.9;
+}
+
+.passage-note {
+  margin-top: 16px;
+  background: #DBEAFE;
+  padding: 12px;
+  border-radius: 10px;
+  color: #1E40AF;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* TEAM PANELS */
+.team-panel {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.05);
+}
+
+.team-header {
+  padding-bottom: 12px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #E2E8F0;
+}
+
+.team-header h2 {
+  font-size: 1.35rem;
+}
+
+.team-a .team-header h2 {
+  color: var(--purple);
+}
+
+.team-b .team-header h2 {
+  color: var(--primary-dark);
+}
+
+.team-header p {
+  color: var(--muted);
+  font-size: .95rem;
+  margin-top: 4px;
+}
+
+.q-card {
+  background: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+}
+
+.q-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.q-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  color: white;
+  background: var(--purple);
+  margin-right: 7px;
+  font-size: .9rem;
+}
+
+.team-b .q-num {
+  background: var(--primary);
+}
+
+.show-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 9px 15px;
+  background: var(--purple);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.team-b .show-btn {
+  background: var(--primary);
+}
+
+.show-btn:hover {
+  opacity: .85;
+}
+
+.answer-box {
+  display: none;
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--green-light);
+  border-left: 5px solid var(--green);
+  border-radius: 8px;
+  color: #065F46;
+  font-weight: 700;
+}
+
+.answer-box.visible {
+  display: block;
+  animation: slideDown .25s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+@keyframes pop{from{transform:scale(.5);opacity:0}}
+.win i{position:absolute;top:0;width:8px;height:14px;border-radius:2px;opacity:0;animation:fall 2.2s ease-in infinite}
+.win i:nth-child(1){left:6%;background:#ff4fa3}.win i:nth-child(2){left:18%;background:#8b3dff;animation-delay:.3s}
+.win i:nth-child(3){left:30%;background:#14b8a6;animation-delay:.6s}.win i:nth-child(4){left:42%;background:#ff8a2b;animation-delay:.1s}
+.win i:nth-child(5){left:54%;background:#fff;animation-delay:.8s}.win i:nth-child(6){left:66%;background:#ff4fa3;animation-delay:.4s}
+.win i:nth-child(7){left:78%;background:#14b8a6;animation-delay:.9s}.win i:nth-child(8){left:90%;background:#8b3dff;animation-delay:.2s}
+@keyframes fall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(300px) rotate(540deg)}}
+@media (max-width:640px){.mr-grid{grid-template-columns:1fr}.mi{height:480px}}
+
+
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="#home">🎡 Activity Wheel</a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#wheel">Wheel</a>
+    <a href="#mystery_box">Mystery BOX</a>
+    <a href="#selected">Activity</a>
+    <a href="#selected">Questions</a>
+    <a href="#review">Review</a>
+    <a href="#teacher">Teacher</a>
+  </nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="hero">
+  <p class="pill">English Language Learning · Reading Skills</p>
+  <h1>Classroom Activity Wheel 🎡</h1>
+  <p class="tagline">Read Smart. Find Fast. Learn Better.</p>
+  <p class="topic">Topic: <strong>Skimming and Scanning</strong></p>
+  <ol class="flow">
+    <li>Pick a section</li><li>Read or look</li><li>Click the card</li><li>Answer questions</li><li>Back to wheel</li>
+  </ol>
+  <a class="btn" href="#wheel">Start Learning →</a>
+</section>
+<!-- Warm_up_page -->
+ <section style="display:flex; flex-direction:column; align-items:center; gap:24px; padding:20px;">
+  <img
+    src="./public/warm_aup_1.jpeg"
+    alt="Warm up activity: Find the main idea of the passage and answer the questions."
+    style="width:90%; max-width:800px; height:auto; display:block; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.18);">
+
+  <img
+    src="./public/warm_up2.jpeg"
+    alt="Warm up activity: Find the main idea of the passage and answer the questions."
+    style="width:90%; max-width:800px; height:auto; display:block; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.18);">
+</section>
+<!-- WHEEL -->
+
+<!-- WHEEL -->
+<section id="wheel" class="panel">
+  <h2>Activity Wheel</h2>
+
+  <p class="sub" id="wheel-status" aria-live="polite">
+    Press <strong>SPIN &amp; LEARN</strong> to randomly select an activity.
+    You can also tap any section.
+  </p>
+
+  <div class="wheel-wrap">
+
+    <div class="pointer" aria-hidden="true"></div>
+
+    <div class="wheel" id="activity-wheel">
+
+      <a class="slice s1" href="#a1">
+        <span>📖</span>
+        Find the main idea.
+      </a>
+
+      <a class="slice s2" href="#a2">
+        <span>📚</span>
+        Find the submission date.
+      </a>
+
+      <a class="slice s3" href="#a3">
+        <span>🖼️</span>
+        Identify the main idea of the pic.
+      </a>
+
+      <a class="slice s4" href="#a4">
+        <span>🔍</span>
+        Find the price.
+      </a>
+
+    </div>
+
+    <button type="button"
+      class="hub"
+      id="spin-button"
+      aria-label="Spin the activity wheel">
+
+      SPIN<br>&amp; LEARN
+
+    </button>
+
+  </div>
+
+  <!-- SPIN RESULT -->
+  <div class="result" id="spin-result">
+
+    <span id="result-default">
+      Press <strong>SPIN &amp; LEARN</strong>, or tap any section.
+    </span>
+
+    <a class="go" id="result-link" href="#a1">
+      🎯 Landed on: <span id="result-name"></span>
+      <u>Open it →</u>
+    </a>
+
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+
+    <a class="lg c1" href="#a1">
+      <b>📖 Skimming Challenge</b>
+      <small>
+        Passage Activity 1 · Find the main idea of a passage.
+      </small>
+    </a>
+
+    <a class="lg c2" href="#a2">
+      <b>📚 Scanning Challenge</b>
+      <small>
+        Passage Activity 2 · Find specific information in a passage.
+      </small>
+    </a>
+
+    <a class="lg c3" href="#a3">
+      <b>🖼️ Picture Reading Challenge</b>
+      <small>
+        Picture Activity 1 · Imagine you are scrolling through
+        Facebook and suddenly come across this picture of
+        Daffodil International University students gathered in
+        the auditorium to enjoy the FIFA World Cup. Look at the
+        picture quickly and identify the overall scene.
+      </small>
+    </a>
+
+    <a class="lg c4" href="#a4">
+      <b>🔍 Find the Price Challenge</b>
+      <small>
+        Picture Activity 2 · Suppose you have 150 taka for lunch.
+        You visit Uptown Grillers near DIU and check the menu
+        to decide what you can afford.
+      </small>
+      <small>
+        Which food item can you afford with your 150 taka?
+      </small>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- SELECTED ACTIVITY (only the :target activity is displayed) -->
+<section id="selected" class="panel stage">
+  <h2>Selected Activity</h2>
+  <p class="placeholder">👆 No activity chosen yet. <a href="#wheel">Go to the wheel</a> and select one of the four sections.</p>
+
+  <!-- ACTIVITY 1 -->
+  <article class="activity" id="a1">
+    <div class="meta"><span class="tag c1">Passage Activity 1</span><h3>📖 Skimming Challenge</h3><a class="back" href="#wheel">← Back to Wheel</a></div>
+    <input type="checkbox" id="f1" class="sr flip-toggle">
+    <div class="card"><div class="inner">
+      <label class="face front" for="f1">
+        <h4>The School Science Fair</h4>
+        <p class="instr">Read the passage quickly. Do not focus on every word. Try to understand the main idea.</p>
+        <blockquote>Our school is organizing a Science Fair on December 15. Students from different classes will present their science projects. The event will take place in the school auditorium from 10:00 AM to 2:00 PM. Visitors can explore creative experiments, robotics projects, and environmental models. The main purpose of the fair is to encourage students to develop scientific curiosity and creativity.</blockquote>
+        <span class="cta">Click to Reveal Questions ↻</span>
+      </label>
+      <div class="face back">
+        <h4>Skimming Questions</h4>
+        <fieldset><legend>1. What is the main idea of the passage?</legend>
+          <label><input type="radio" name="a1q1"> Students must buy science books.</label>
+          <label><input type="radio" name="a1q1" data-correct="true"> The school is holding a Science Fair for students and visitors.</label>
+          <label><input type="radio" name="a1q1"> The auditorium is being repaired.</label></fieldset>
+        <fieldset><legend>2. What is the best title for the passage?</legend>
+          <label><input type="radio" name="a1q2"> A Robotics Lesson</label>
+          <label><input type="radio" name="a1q2"> A Visit to the Zoo</label>
+          <label><input type="radio" name="a1q2" data-correct="true"> The School Science Fair</label></fieldset>
+        <fieldset><legend>3. What is the main purpose of organizing the Science Fair?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <label class="cta" for="f1">↩ Back to Passage</label>
+        <a class="back" href="#wheel">← Back to Wheel</a>
+      </div>
+    </div></div>
+  </article>
+
+  <!-- ACTIVITY 2 -->
+  <article class="activity" id="a2">
+    <div class="meta"><span class="tag c2">Passage Activity 2</span><h3>📚 Scanning Challenge</h3><a class="back" href="#wheel">← Back to Wheel</a></div>
+    <input type="checkbox" id="f2" class="sr flip-toggle">
+    <div class="card"><div class="inner">
+      <label class="face front" for="f2">
+        <h4>The English Festival Notice</h4>
+        <p class="instr">Search the passage quickly to find names, dates, times, and locations.</p>
+        <blockquote>The annual English Festival will be held on November 25 at Greenfield School. The program will begin at 9:30 AM in the main auditorium. Students can participate in spelling competitions, storytelling, poetry recitation, and public speaking. Registration closes on November 20. For more information, contact Ms. Sarah Ahmed at Room 204.</blockquote>
+        <span class="cta">Click to Reveal Questions ↻</span>
+      </label>
+      <div class="face back">
+        <h4>Scanning Questions</h4>
+        <fieldset><legend>1. What is the date of the English Festival?</legend>
+          <label><input type="radio" name="a2q1"> November 20</label>
+          <label><input type="radio" name="a2q1" data-correct="true"> November 25</label>
+          <label><input type="radio" name="a2q1"> December 15</label></fieldset>
+        <fieldset><legend>2. What time will the program begin?</legend>
+          <label><input type="radio" name="a2q2" data-correct="true"> 9:30 AM</label>
+          <label><input type="radio" name="a2q2"> 10:00 AM</label>
+          <label><input type="radio" name="a2q2"> 2:00 PM</label></fieldset>
+        <fieldset><legend>3. Where will the event take place?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <fieldset><legend>4. Who should students contact for more information?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <label class="cta" for="f2">↩ Back to Passage</label>
+        <a class="back" href="#wheel">← Back to Wheel</a>
+      </div>
+    </div></div>
+  </article>
+
+  <!-- ACTIVITY 3 -->
+  <article class="activity" id="a3">
+    <div class="meta"><span class="tag c3">Picture Activity 1</span><h3>🖼️ Picture Reading Challenge</h3><a class="back" href="#wheel">← Back to Wheel</a></div>
+    <input type="checkbox" id="f3" class="sr flip-toggle">
+    <div class="card"><div class="inner">
+      <label class="face front" for="f3">
+        <h4>Picture: DIU Students Watching Football</h4>
+        <p class="instr">Look at the picture quickly. What is the overall scene, and what are the students watching?</p>
+        <img src="public/football.jpeg" alt="Daffodil International University students gathered in an auditorium to watch a football match">
+        <span>Situation: Imagine you are scrolling through Facebook and suddenly come across this picture of Daffodil International University students gathered in the auditorium to enjoy the FIFA World Cup. Look at the picture quickly and identify the overall scene.</span>
+        <span class="cta">Click to Reveal Questions ↻</span>
+      </label>
+      <div class="face back">
+        <h4>What is the picture mainly showing?</h4>
+        <fieldset><legend>What is the picture mainly showing?</legend>
+          <label><input type="radio" name="a3q1" data-correct="true"> A. Students enjoying the excitement of watching a football match together.</label>
+          <label><input type="radio" name="a3q1"> B. Students attending a university examination.</label>
+          <label><input type="radio" name="a3q1"> C. Students participating in a classroom lecture.</label></fieldset>
+        <label class="cta" for="f3">↩ Back to Picture</label>
+        <a class="back" href="#wheel">← Back to Wheel</a>
+      </div>
+    </div></div>
+  </article>
+
+  <!-- ACTIVITY 4 -->
+  <article class="activity" id="a4">
+    <div class="meta"><span class="tag c4">Picture Activity 2</span><h3>🔍 Visual Scanning Challenge</h3><a class="back" href="#wheel">← Back to Wheel</a></div>
+    <input type="checkbox" id="f4" class="sr flip-toggle">
+    <div class="card"><div class="inner">
+      <label class="face front" for="f4">
+        <h4>Picture: Uptown Grillers Appetizer Menu</h4>
+        <p class="instr">Suppose you have 150 taka for lunch. Scan the menu to find items you can afford and their prices.</p>
+        <img src="public/food.jpeg" alt="Uptown Grillers appetizer menu with food items and prices">
+        <span>Suppose you have 150 taka for lunch. You visit Uptown Grillers near DIU and check the menu to decide what you can afford.</span>
+        <span class="cta">Click to Reveal Questions ↻</span>
+      </label>
+      <div class="face back">
+        <h4>Visual Scanning Questions</h4>
+        <fieldset><legend>1.Which food item can you afford with your 150 taka?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <label class="cta" for="f4">↩ Back to Picture</label>
+        <a class="back" href="#wheel">← Back to Wheel</a>
+      </div>
+    </div></div>
+  </article>
+</section>
+
+<!-- Mystrey box -->
+ <section id="mystery" class="mr">
+ <div class="mr-box">
+  <h2>🎁 THE MYSTERY ROOM</h2>
+  <p class="mr-sub">ONE BOX · FOUR SECRETS · ONE CHALLENGE</p>
+  <div class="mr-grid">
+  <!-- mystry1 -->
+<div class="mcard mc1">
+  <input type="checkbox" id="m1" class="sr m">
+  <input type="checkbox" id="mq1" class="sr qq">
+
+  <div class="mc">
+    <div class="mi">
+
+      <!-- FRONT: Mystery Card -->
+      <label class="mf mfront" for="m1">
+        <span class="gift">🎁</span>
+        <b>MYSTERY 01</b>
+        <small>Tap to reveal</small>
+      </label>
+
+      <!-- PHOTO STAGE -->
+      <div class="mf mreveal">
+        <span class="mtag">Listening Activity · Scanning Challenge</span>
+
+        <h4>Look at the picture!</h4>
+
+        <p class="instr">
+          Click on the picture to reveal the questions.
+        </p>
+
+        <label class="photo-next" for="mq1">
+          <img src="./public/mystry1.jpeg" alt="Shopping ingredients: rice, eggs, milk and sugar">
+          <span>👆 Click the photo to reveal questions</span>
+        </label>
+
+        <label class="mlink" for="m1">↩ Close box</label>
+      </div>
+
+      <!-- QUESTIONS STAGE -->
+      <div class="mf mqs">
+
+        <div class="win">
+          🎉 Let's Solve It!
+          <i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i>
+        </div>
+
+        <span class="mtag">Scanning · Find Specific Information</span>
+
+        <h4>Mystery 01 Questions</h4>
+
+        <p class="instr">
+          Listen carefully and find the specific quantities.
+        </p>
+
+        <h4 class="q1">
+          <legend>1. How much rice does his wife need?</legend>
+          
+        </h4>
+
+        <h4 class="q2">
+          <legend>2. How many eggs should he buy?</legend>
+          
+        </h4>
+         <h4 class="q"3>3. What is the quantity of milk?</h4>
+
+        <h4 class="q5">
+          <legend>5. Which technique have you just used to answer?</legend>
+        </h4>
+
+        <label class="mlink" for="mq1">
+          ↩ Back to Photo
+        </label>
+
+        <a class="mlink" href="#mystery">
+          Back to Mystery Room
+        </a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- card 2 -->
+  
+
+<div class="mcard mc2">
+
+  <!-- THREE CHECKBOXES CONTROL FOUR STAGES -->
+  <input type="checkbox" id="m2" class="sr m">
+  <input type="checkbox" id="mq2" class="sr qq">
+  <input type="checkbox" id="mq2q" class="sr qqq">
+
+  <div class="mc">
+    <div class="mi">
+
+      <!-- STAGE 1: MYSTERY BOX -->
+      <label class="mf mfront" for="m2">
+        <span class="gift">🎁</span>
+        <b>MYSTERY 02</b>
+        <small>Tap to reveal</small>
+      </label>
+
+      <!-- STAGE 2: PHOTO -->
+      <div class="mf mreveal">
+        <span class="mtag">Mystery Challenge · Reading Skills</span>
+
+        <h4>Something is hidden here!</h4>
+
+        <p class="instr">
+          Click the picture to discover your next challenge.
+        </p>
+
+        <label class="photo-next" for="mq2">
+          <img src="./public/mystrey2.jpeg" alt="Mystery 02 challenge">
+          <span>👆 Click the photo to continue</span>
+        </label>
+      </div>
+
+      <!-- STAGE 3: PASSAGE -->
+      <div class="mf mqs">
+        <span class="mtag">Passage-based · Skimming Challenge</span>
+
+        <h4>The Night-Before-Exam Student 😂</h4>
+
+        <p class="instr">
+          Imagine this situation. Read the passage and think about
+          the reading strategy being used.
+        </p>
+
+        <div class="passage-box">
+          <blockquote class="instr">
+            Your exam is tomorrow. You have 50 pages to read,
+            but only 5 minutes left. Will you read every single
+            word, or just try to understand what the text is
+            mainly about?
+          </blockquote>
+        </div>
+
+        <label class="mlink next-question" for="mq2q">
+          Next Question ➜
+        </label>
+      </div>
+
+      <!-- STAGE 4: FINAL QUESTION -->
+      <div class="mf question-stage">
+        <span class="mtag">Final Challenge · Mystery 02</span>
+
+        <h4 class="question-heading">Final Mystery Question ❓</h4>
+
+        <p class="instr">
+          What is this reading technique called?
+          Define it.
+        </p>
+
+        <div class="passage-box">
+          <b>Answer: Skimming</b>
+          <p class="instr">
+            Skimming is a reading technique in which we read
+            quickly to understand the main idea or general meaning
+            of a text without reading every word.
+          </p>
+        </div>
+
+        <a class="mlink" href="#mystery">
+          ↩ Back to Mystery Room
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <!-- card 3 -->
+  
+<div class="mcard mc2">
+
+  <!-- UNIQUE CHECKBOXES FOR MYSTERY 03 -->
+  <input type="checkbox" id="m3" class="sr m">
+  <input type="checkbox" id="mq3" class="sr qq">
+  <input type="checkbox" id="mq3q" class="sr qqq">
+
+  <div class="mc">
+    <div class="mi">
+
+      <!-- STAGE 1: MYSTERY BOX -->
+      <label class="mf mfront" for="m3">
+        <span class="gift">🎁</span>
+        <b>MYSTERY 03</b>
+        <small>Tap to reveal</small>
+      </label>
+
+      <!-- STAGE 2: PHOTO -->
+      <div class="mf mreveal">
+        <span class="mtag">Mystery Challenge · Reading Skills</span>
+
+        <h4>Something is hidden here!</h4>
+
+        <p class="instr">
+          Click the picture to discover your next challenge.
+        </p>
+
+        <label class="photo-next" for="mq3">
+          <img src="./public/mystry3.jpeg" alt="Mystery 03 challenge">
+          <span>👆 Click the photo to continue</span>
+        </label>
+      </div>
+
+      <!-- STAGE 3: PASSAGE -->
+      <div class="mf mqs">
+        <span class="mtag">Passage-based · Reading Challenge</span>
+
+        <h4>Facebook Post 🌍</h4>
+
+        <div class="passage-box">
+          <blockquote class="instr">
+            Climate change is affecting our planet. Rising
+            temperatures, floods and pollution threaten human
+            lives. Planting trees and reducing pollution can
+            help protect the environment.
+          </blockquote>
+        </div>
+
+        <p class="instr">
+          Read the post quickly and try to identify its main idea.
+        </p>
+
+        <label class="mlink next-question" for="mq3q">
+          Next Question ➜
+        </label>
+      </div>
+
+      <!-- STAGE 4: FINAL QUESTION -->
+      <div class="mf question-stage">
+        <span class="mtag">Final Challenge · Mystery 03</span>
+
+        <h4>Final Mystery Questions ❓</h4>
+
+        <p class="instr">
+          1. What is the post mainly about?
+        </p>
+
+        <p class="instr">
+          2. Which reading technique did you use to identify
+          the main idea?
+        </p>
+
+        <a class="mlink" href="#mystery">
+          ↩ Back to Mystery Room
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <!-- card 4 -->
+  
+
+<div class="mcard mc2 mc4">
+
+  <!-- UNIQUE CHECKBOXES FOR MYSTERY 04 -->
+  <input type="checkbox" id="m4" class="sr m">
+  <input type="checkbox" id="mq4" class="sr qq">
+
+  <div class="mc">
+    <div class="mi">
+
+      <!-- STAGE 1: MYSTERY BOX -->
+      <label class="mf mfront" for="m4">
+        <span class="gift">🎁</span>
+        <b>MYSTERY 04</b>
+        <small>Tap to reveal</small>
+      </label>
+
+      <!-- STAGE 2: PHOTO -->
+      <div class="mf mreveal">
+        <span class="mtag">Mystery Challenge · Reading Skills</span>
+
+        <h4>Something is hidden here!</h4>
+
+        <p class="instr">
+          Click the picture to discover your next challenge.
+        </p>
+
+        <label class="photo-next" for="mq4">
+          <img src="./public/mysrty4.jpeg" alt="Mystery 04 challenge">
+          <span>👆 Click the photo to continue</span>
+        </label>
+      </div>
+
+      <!-- STAGE 3: FINAL QUESTION -->
+      <div class="mf question-stage">
+        <span class="mtag">Final Challenge · Mystery 04</span>
+
+        <h4>What is this picture mainly about?</h4>
+
+        <h4>
+          Which reading technique did you just use to identify
+          the main idea?
+        </h4>
+
+        <a class="mlink" href="#mystery">
+          ↩ Back to Mystery Room
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+</section>
+
+<!-- REVIEW -->
+<section id="review" class="panel">
+  <h2>Review</h2>
+  <p class="sub">Finished? Open a box to check the answers. Answers are not checked automatically.</p>
+  <details><summary>📖 Skimming Challenge answers</summary><p>1. The school is holding a Science Fair for students and visitors. 2. The School Science Fair. 3. To encourage scientific curiosity and creativity.</p></details>
+  <details><summary>📚 Scanning Challenge answers</summary><p>1. November 25. 2. 9:30 AM. 3. Greenfield School, main auditorium. 4. Ms. Sarah Ahmed (Room 204).</p></details>
+  <details><summary>🖼️ Picture Reading answers</summary><p>What is the picture mainly showing? A. Students enjoying the excitement of watching a football match together.</p></details>
+  <details><summary>🔍 Visual Scanning answers</summary><p>1. 120 taka. 2. French fries. 3. Potato wedges (100 taka) is another affordable item.</p></details>
+  <a class="btn" href="#wheel">↺ Back to Wheel</a>
+</section>
+
+<!-- TEACHER -->
+<section id="teacher" class="panel teacher">
+  <h2>👩‍🏫 Teacher Customization Area</h2>
+  <p class="note">This panel is a layout guide only. Nothing typed or changed in a browser is saved, because there is no JavaScript or backend. To customize, edit the text in <code>index.html</code> directly.</p>
+  <div class="tgrid">
+    <div class="tcard"><h5>Activity Titles</h5><div class="field">📖 Skimming Challenge</div><div class="field">📚 Scanning Challenge</div><div class="field">🖼️ Picture Reading Challenge</div><div class="field">🔍 Visual Scanning Challenge</div></div>
+    <div class="tcard"><h5>Passage Text</h5><div class="field">Find the &lt;blockquote&gt; inside #a1 and #a2, then replace the text.</div></div>
+    <div class="tcard"><h5>Picture Descriptions</h5><div class="field">Update the alt text and image src inside #a3 and #a4 to change the activity pictures.</div></div>
+    <div class="tcard"><h5>Questions</h5><div class="field">Edit each &lt;legend&gt; on the back face (.back) of the activity.</div></div>
+    <div class="tcard"><h5>Answer Choices</h5><div class="field">Edit the text beside each &lt;input type="radio"&gt;. Keep the same <code>name</code> within one question.</div></div>
+  </div>
+</section>
+
+<!-- Question section -->
+ <div class="container">
+
+  <!-- HEADER -->
+  <header class="top-bar">
+    <div class="title-group">
+      <h1>
+        <span class="badge">Reading Activity</span>
+        COVID-19 Reading Challenge
+      </h1>
+      <p>🎯 Team A: Skimming | Team B: Scanning</p>
+    </div>
+
+    <div class="timer-box">
+      <span>⏱️</span>
+      <div id="timer-display" class="timer-time">02:00</div>
+      <button class="timer-btn btn-start" id="start-btn"
+        onclick="toggleTimer()">Start</button>
+      <button class="timer-btn btn-reset"
+        onclick="resetTimer()">Reset</button>
+    </div>
+  </header>
+
+  <main class="activity-grid">
+
+    <!-- LEFT: PASSAGE -->
+    <section class="passage-card">
+
+      <div class="passage-header">
+        <h2>🌍 COVID-19 Pandemic</h2>
+        <p>Read the passage carefully</p>
+      </div>
+
+      <div class="passage-text">
+        In March 2020, the World Health Organization declared
+        COVID-19 a pandemic. The virus spread across the world,
+        affecting millions of people. Schools closed, and many
+        people stayed at home. People were advised to wear masks,
+        wash their hands and maintain social distance.
+
+        On 8 December 2020, the first COVID-19 vaccine was
+        administered in the United Kingdom.
+      </div>
+
+      <div class="passage-note">
+        📖 Read the passage and answer your team's questions!
+      </div>
+
+    </section>
+
+    <!-- RIGHT: TEAM QUESTIONS -->
+    <section>
+
+      <!-- TEAM A -->
+      <div class="team-panel team-a">
+
+        <div class="team-header">
+          <h2>🟣 Team A – Skimming</h2>
+          <p>
+            Focus on the main idea and general meaning.
+            Do not read every word.
+          </p>
+        </div>
+
+        <!-- QUESTION 1 -->
+        <div class="q-card">
+          <div class="q-text">
+            <span class="q-num">1</span>
+            What is the passage mainly about?
+          </div>
+
+          <button class="show-btn"
+            onclick="revealAnswer('answer-a1')">
+            Show Answer
+          </button>
+
+          <div id="answer-a1" class="answer-box">
+            ✅ Answer: The COVID-19 pandemic.
+          </div>
+        </div>
+
+        <!-- QUESTION 2 -->
+        <div class="q-card">
+          <div class="q-text">
+            <span class="q-num">2</span>
+            What safety measures did people follow?
+          </div>
+
+          <button class="show-btn"
+            onclick="revealAnswer('answer-a2')">
+            Show Answer
+          </button>
+
+          <div id="answer-a2" class="answer-box">
+            ✅ Answer: Wearing masks, washing hands and
+            maintaining social distance.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TEAM B -->
+      <div class="team-panel team-b">
+
+        <div class="team-header">
+          <h2>🔵 Team B – Scanning</h2>
+          <p>
+            Search for specific information, dates and details.
+          </p>
+        </div>
+
+        <!-- QUESTION 1 -->
+        <div class="q-card">
+          <div class="q-text">
+            <span class="q-num">1</span>
+            In which month and year was COVID-19 declared
+            a pandemic?
+          </div>
+
+          <button class="show-btn"
+            onclick="revealAnswer('answer-b1')">
+            Show Answer
+          </button>
+
+          <div id="answer-b1" class="answer-box">
+            ✅ Answer: March 2020.
+          </div>
+        </div>
+
+        <!-- QUESTION 2 -->
+        <div class="q-card">
+          <div class="q-text">
+            <span class="q-num">2</span>
+            On which date was the first vaccine administered
+            in the UK?
+          </div>
+
+          <button class="show-btn"
+            onclick="revealAnswer('answer-b2')">
+            Show Answer
+          </button>
+
+          <div id="answer-b2" class="answer-box">
+            ✅ Answer: 8 December 2020.
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <div class="footer">
+    🎓 Great job, teams! Practice Skimming and Scanning!
+  </div>
+
+</div>
+
+<script>
+/* SHOW ANSWER */
+function revealAnswer(id) {
+  const answer = document.getElementById(id);
+  answer.classList.toggle("visible");
+}
+
+/* TWO-MINUTE TIMER */
+let remainingTime = 120;
+let timerInterval = null;
+let running = false;
+
+const timerDisplay = document.getElementById("timer-display");
+const startButton = document.getElementById("start-btn");
+
+function updateTimer() {
+  const minutes = Math.floor(remainingTime / 60);
+  const seconds = remainingTime % 60;
+
+  timerDisplay.textContent =
+    String(minutes).padStart(2, "0") + ":" +
+    String(seconds).padStart(2, "0");
+
+  timerDisplay.classList.toggle(
+    "warning", remainingTime <= 30 && remainingTime > 0
+  );
+
+  if (remainingTime === 0) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    running = false;
+    startButton.textContent = "Start";
+    timerDisplay.classList.add("done");
+    return;
+  }
+
+  remainingTime--;
+}
+
+function toggleTimer() {
+  if (running) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    running = false;
+    startButton.textContent = "Resume";
+  } else {
+    if (remainingTime <= 0) return;
+
+    running = true;
+    startButton.textContent = "Pause";
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  running = false;
+  remainingTime = 120;
+
+  startButton.textContent = "Start";
+  timerDisplay.classList.remove("warning", "done");
+
+  updateTimer();
+}
+</script>
+
+<footer>Classroom Activity Wheel 🎡 · Read Smart. Find Fast. Learn Better.</footer>
+<script>
+  const wheel = document.getElementById("activity-wheel");
+  const spinButton = document.getElementById("spin-button");
+  const wheelStatus = document.getElementById("wheel-status");
+  const activities = ["a1", "a2", "a3", "a4"];
+  const names = [
+    "Skimming Challenge",
+    "Scanning Challenge",
+    "Picture Reading Challenge",
+    "Visual Scanning Challenge"
+  ];
+  let currentRotation = 0;
+  let spinning = false;
+
+  document.addEventListener("change", (event) => {
+    const answer = event.target;
+    if (!(answer instanceof HTMLInputElement) || answer.type !== "radio") return;
+
+    const question = answer.closest("fieldset");
+    const correctAnswer = question?.querySelector('input[type="radio"][data-correct="true"]');
+    if (!question || !correctAnswer) return;
+
+    let feedback = question.querySelector(".answer-feedback");
+    if (!feedback) {
+      feedback = document.createElement("p");
+      feedback.className = "answer-feedback";
+      feedback.setAttribute("role", "status");
+      question.append(feedback);
+    }
+
+    const isCorrect = answer === correctAnswer;
+    feedback.classList.toggle("is-correct", isCorrect);
+    feedback.classList.toggle("is-incorrect", !isCorrect);
+    feedback.textContent = isCorrect
+      ? "Correct! That's the right answer."
+      : `Not quite. The correct answer is: ${correctAnswer.closest("label").textContent.trim()}`;
+  });
+
+  spinButton.addEventListener("click", () => {
+    if (spinning) return;
+
+    spinning = true;
+    spinButton.disabled = true;
+    wheelStatus.textContent = "The wheel is spinning…";
+
+    const selectedIndex = Math.floor(Math.random() * activities.length);
+    const targetAngle = 360 - (selectedIndex * 90);
+    const fullTurns = 3 + Math.floor(Math.random() * 2);
+    const currentMod = ((currentRotation % 360) + 360) % 360;
+    currentRotation += (fullTurns * 360) + (targetAngle - currentMod);
+
+    wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+    window.setTimeout(() => {
+      spinning = false;
+      spinButton.disabled = false;
+      wheelStatus.textContent = `Selected: ${names[selectedIndex]}!`;
+      window.location.hash = activities[selectedIndex];
+    }, 1000);
+  });
+</script>
+</body>
+</html>

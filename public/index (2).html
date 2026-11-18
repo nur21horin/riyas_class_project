@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classroom Activity Wheel 🎡</title>
+<link rel="stylesheet" href="./style (2).css">
+</head>
+<!--
+  NO JAVASCRIPT is used in this project (HTML5 + CSS3 only).
+  LIMITATION: without JavaScript a wheel cannot spin to a RANDOM result.
+  So the wheel works in two honest ways:
+   1. Each section is an anchor link (#a1 ... #a4) -> :target shows ONLY that activity.
+   2. "SPIN & LEARN" is a radio-button label (4 radios, 4 @keyframes). Each press plays a
+      CSS spin that stops on the NEXT activity in order, then shows an "Open it" link.
+  Result is predictable, not random (random needs JavaScript); students may also tap any section.
+  The flip card uses a hidden checkbox: label click -> :checked -> rotateY(180deg).
+-->
+<body>
+
+<header class="nav">
+  <a class="brand" href="#home">🎡 Activity Wheel</a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#wheel">Wheel</a>
+    <a href="#selected">Activity</a>
+    <a href="#selected">Questions</a>
+    <a href="#mystery">Mystery Room</a>
+    <a href="#review">Review</a>
+    <a href="#teacher">Teacher</a>
+  </nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="hero">
+  <p class="pill">English Language Learning · Reading Skills</p>
+  <h1>Classroom Activity Wheel 🎡</h1>
+  <p class="tagline">Read Smart. Find Fast. Learn Better.</p>
+  <p class="topic">Topic: <strong>Skimming and Scanning</strong></p>
+  <ol class="flow">
+    <li>Pick a section</li><li>Read or look</li><li>Click the card</li><li>Answer questions</li><li>Open the Mystery Room</li>
+  </ol>
+  <a class="btn" href="#wheel">Start Learning →</a>
+</section>
+
+<!-- WHEEL -->
+<section id="wheel" class="panel">
+  <h2>Activity Wheel</h2>
+  <p class="sub">Press <strong>SPIN &amp; LEARN</strong> and the pointer stops on the next activity (it goes in order; it is not random). You can also tap any section.</p>
+  <input type="radio" name="spin" id="r1" class="sr">
+  <input type="radio" name="spin" id="r2" class="sr">
+  <input type="radio" name="spin" id="r3" class="sr">
+  <input type="radio" name="spin" id="r4" class="sr">
+  <div class="wheel-wrap">
+    <div class="pointer" aria-hidden="true"></div>
+    <div class="wheel">
+      <a class="slice s1" href="#a1"><span>📖</span>Find the main idea.</a>
+      <a class="slice s2" href="#a2"><span>📚</span>Find the submission date.</a>
+      <a class="slice s3" href="#a3"><span>🖼️</span> Identify the main idea of the pic</a>
+      <a class="slice s4" href="#a4"><span>🔍</span>Find the price.</a>
+    </div>
+    <label class="hub l1" for="r1">SPIN<br>&amp; LEARN</label>
+    <label class="hub l2" for="r2">SPIN<br>&amp; LEARN</label>
+    <label class="hub l3" for="r3">SPIN<br>&amp; LEARN</label>
+    <label class="hub l4" for="r4">SPIN<br>&amp; LEARN</label>
+  </div>
+  <p class="result"><span class="res0">Press <b>SPIN &amp; LEARN</b>, or tap any section.</span><a class="go g1" href="#a1">🎯 Landed on: 📖 Find the main idea. <u>Open it →</u></a><a class="go g2" href="#a2">🎯 Landed on: 📚 Find the submission date. <u>Open it →</u></a><a class="go g3" href="#a3">🎯 Landed on: 🖼️ Identify the main idea of the pic <u>Open it →</u></a><a class="go g4" href="#a4">🎯 Landed on: 🔍 Find the price. <u>Open it →</u></a></p>
+
+  <div class="legend">
+    <a class="lg c1" href="#a1"><b>📖 Skimming Challenge</b><small>Passage Activity 1 · Find the main idea of a passage.</small></a>
+    <a class="lg c2" href="#a2"><b>📚 Scanning Challenge</b><small>Passage Activity 2 · Find specific information in a passage.</small></a>
+    <a class="lg c3" href="#a3"><b>🖼️ Picture Reading Challenge</b><small>Picture Activity 1 · Observe a picture and identify its main message.</small></a>
+    <a class="lg c4" href="#a4"><b>🔍 Visual Scanning Challenge</b><small>Picture Activity 2 · Find specific details inside a picture.</small></a>
+  </div>
+</section>
+
+<!-- SELECTED ACTIVITY (only the :target activity is displayed) -->
+<section id="selected" class="panel stage">
+  <h2>Selected Activity</h2>
+  <p class="placeholder">👆 No activity chosen yet. <a href="#wheel">Go to the wheel</a> and select one of the four sections.</p>
+
+  <!-- ACTIVITY 1 -->
+  <article class="activity" id="a1">
+    <div class="meta"><span class="tag c1">Passage Activity 1</span><h3>📖 Skimming Challenge</h3><a class="back" href="#wheel">← Back to Wheel</a></div>
+    <input type="checkbox" id="f1" class="sr flip-toggle">
+    <div class="card"><div class="inner">
+      <label class="face front" for="f1">
+        <h4>The School Science Fair</h4>
+        <p class="instr">Read the passage quickly. Do not focus on every word. Try to understand the main idea.</p>
+        <blockquote>Our school is organizing a Science Fair on December 15. Students from different classes will present their science projects. The event will take place in the school auditorium from 10:00 AM to 2:00 PM. Visitors can explore creative experiments, robotics projects, and environmental models. The main purpose of the fair is to encourage students to develop scientific curiosity and creativity.</blockquote>
+        <span class="cta">Click to Reveal Questions ↻</span>
+      </label>
+      <div class="face back">
+        <h4>Skimming Questions</h4>
+        <fieldset><legend>1. What is the main idea of the passage?</legend>
+          <label><input type="radio" name="a1q1"> Students must buy science books.</label>
+          <label><input type="radio" name="a1q1"> The school is holding a Science Fair for students and visitors.</label>
+          <label><input type="radio" name="a1q1"> The auditorium is being repaired.</label></fieldset>
+        <fieldset><legend>2. What is the best title for the passage?</legend>
+          <label><input type="radio" name="a1q2"> A Robotics Lesson</label>
+          <label><input type="radio" name="a1q2"> A Visit to the Zoo</label>
+          <label><input type="radio" name="a1q2"> The School Science Fair</label></fieldset>
+        <fieldset><legend>3. What is the main purpose of organizing the Science Fair?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <label class="cta" for="f1">↩ Back to Passage</label>
+        <a class="back" href="#wheel">← Back to Wheel</a>
+      </div>
+    </div></div>
+  </article>
+
+  <!-- ACTIVITY 2 -->
+  <article class="activity" id="a2">
+    <div class="meta"><span class="tag c2">Passage Activity 2</span><h3>📚 Scanning Challenge</h3><a class="back" href="#wheel">← Back to Wheel</a></div>
+    <input type="checkbox" id="f2" class="sr flip-toggle">
+    <div class="card"><div class="inner">
+      <label class="face front" for="f2">
+        <h4>The English Festival Notice</h4>
+        <p class="instr">Search the passage quickly to find names, dates, times, and locations.</p>
+        <blockquote>The annual English Festival will be held on November 25 at Greenfield School. The program will begin at 9:30 AM in the main auditorium. Students can participate in spelling competitions, storytelling, poetry recitation, and public speaking. Registration closes on November 20. For more information, contact Ms. Sarah Ahmed at Room 204.</blockquote>
+        <span class="cta">Click to Reveal Questions ↻</span>
+      </label>
+      <div class="face back">
+        <h4>Scanning Questions</h4>
+        <fieldset><legend>1. What is the date of the English Festival?</legend>
+          <label><input type="radio" name="a2q1"> November 20</label>
+          <label><input type="radio" name="a2q1"> November 25</label>
+          <label><input type="radio" name="a2q1"> December 15</label></fieldset>
+        <fieldset><legend>2. What time will the program begin?</legend>
+          <label><input type="radio" name="a2q2"> 9:30 AM</label>
+          <label><input type="radio" name="a2q2"> 10:00 AM</label>
+          <label><input type="radio" name="a2q2"> 2:00 PM</label></fieldset>
+        <fieldset><legend>3. Where will the event take place?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <fieldset><legend>4. Who should students contact for more information?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <label class="cta" for="f2">↩ Back to Passage</label>
+        <a class="back" href="#wheel">← Back to Wheel</a>
+      </div>
+    </div></div>
+  </article>
+
+  <!-- ACTIVITY 3 -->
+  <article class="activity" id="a3">
+    <div class="meta"><span class="tag c3">Picture Activity 1</span><h3>🖼️ Picture Reading Challenge</h3><a class="back" href="#wheel">← Back to Wheel</a></div>
+    <input type="checkbox" id="f3" class="sr flip-toggle">
+    <div class="card"><div class="inner">
+      <label class="face front" for="f3">
+        <h4>Picture: Students at a School Science Fair</h4>
+        <p class="instr">Look at the picture carefully. What is happening? What is the main idea of this picture?</p>
+        <svg id="pic3" viewBox="0 0 400 240" role="img" aria-label="Students presenting experiments and a robot at a science fair">
+          <rect width="400" height="240" fill="#e8f3ff"/>
+          <rect x="40" y="14" width="320" height="38" rx="10" fill="#6c4de6"/>
+          <text x="200" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" font-family="sans-serif">SCIENCE FAIR</text>
+          <rect x="0" y="180" width="400" height="60" fill="#f4c95d"/>
+          <rect x="30" y="150" width="150" height="14" rx="4" fill="#8b5a2b"/><rect x="220" y="150" width="150" height="14" rx="4" fill="#8b5a2b"/>
+          <path d="M60 150 L85 105 L110 150Z" fill="#ef6a5b"/><circle cx="85" cy="100" r="7" fill="#ffb347"/>
+          <rect x="250" y="105" width="50" height="45" rx="8" fill="#4a6cf7"/><rect x="260" y="88" width="30" height="20" rx="5" fill="#8fa8ff"/><circle cx="270" cy="97" r="3"/><circle cx="281" cy="97" r="3"/>
+          <circle cx="140" cy="105" r="14" fill="#f2c9a0"/><rect x="126" y="120" width="28" height="30" rx="8" fill="#2fb67c"/>
+          <circle cx="330" cy="105" r="14" fill="#f2c9a0"/><rect x="316" y="120" width="28" height="30" rx="8" fill="#ef6a5b"/>
+          <circle cx="200" cy="200" r="12" fill="#f2c9a0"/><rect x="186" y="212" width="28" height="28" rx="8" fill="#6c4de6"/>
+        </svg>
+        <span class="cta">Click to Reveal Questions ↻</span>
+      </label>
+      <div class="face back">
+        <h4>Picture Reading Questions</h4>
+        <fieldset><legend>1. What is the main activity shown in the picture?</legend>
+          <label><input type="radio" name="a3q1"> Students are presenting science projects.</label>
+          <label><input type="radio" name="a3q1"> Students are playing football.</label>
+          <label><input type="radio" name="a3q1"> Students are eating lunch.</label></fieldset>
+        <fieldset><legend>2. What is the main purpose of the event?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <fieldset><legend>3. Which title best describes the picture?</legend>
+          <label><input type="radio" name="a3q3"> A Day at the Beach</label>
+          <label><input type="radio" name="a3q3"> Sharing Ideas at the Science Fair</label>
+          <label><input type="radio" name="a3q3"> A Math Exam</label></fieldset>
+        <label class="cta" for="f3">↩ Back to Picture</label>
+        <a class="back" href="#wheel">← Back to Wheel</a>
+      </div>
+    </div></div>
+  </article>
+
+  <!-- ACTIVITY 4 -->
+  <article class="activity" id="a4">
+    <div class="meta"><span class="tag c4">Picture Activity 2</span><h3>🔍 Visual Scanning Challenge</h3><a class="back" href="#wheel">← Back to Wheel</a></div>
+    <input type="checkbox" id="f4" class="sr flip-toggle">
+    <div class="card"><div class="inner">
+      <label class="face front" for="f4">
+        <h4>Picture: School Notice Board</h4>
+        <p class="instr">Look at the picture and quickly find the specific information requested.</p>
+        <svg id="pic4" viewBox="0 0 400 260" role="img" aria-label="Notice board poster for Art and Craft Day">
+          <rect width="400" height="260" rx="12" fill="#b9854f"/>
+          <rect x="16" y="16" width="368" height="228" rx="8" fill="#fff8e7"/>
+          <rect x="16" y="16" width="368" height="40" rx="8" fill="#ef6a5b"/>
+          <text x="200" y="43" text-anchor="middle" font-size="20" font-weight="700" fill="#fff" font-family="sans-serif">ART &amp; CRAFT DAY</text>
+          <g font-family="sans-serif" font-size="15" fill="#2b2b3c">
+            <text x="34" y="85">📅 Date: Friday, 12 December</text>
+            <text x="34" y="110">🕚 Time: 11:00 AM – 1:00 PM</text>
+            <text x="34" y="135">📍 Location: Green Hall</text>
+            <text x="34" y="160">🚪 Room: 305</text>
+            <text x="34" y="185">🎨 Activities: Painting, Clay Models</text>
+            <text x="34" y="210">👧 Students: Maya, Omar, Lina</text>
+            <text x="34" y="234">💲 Entry price: $5</text>
+          </g>
+          <rect x="300" y="68" width="68" height="68" fill="#ffe27a" transform="rotate(6 334 102)"/>
+          <text x="334" y="108" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#2b2b3c">Bring your</text><text x="334" y="124" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#2b2b3c">brushes!</text>
+        </svg>
+        <span class="cta">Click to Reveal Questions ↻</span>
+      </label>
+      <div class="face back">
+        <h4>Visual Scanning Questions</h4>
+        <fieldset><legend>1. What is the event date shown in the poster?</legend>
+          <label><input type="radio" name="a4q1"> Friday, 12 December</label>
+          <label><input type="radio" name="a4q1"> Monday, 15 December</label>
+          <label><input type="radio" name="a4q1"> Friday, 25 November</label></fieldset>
+        <fieldset><legend>2. What time does the event start?</legend>
+          <label><input type="radio" name="a4q2"> 9:30 AM</label>
+          <label><input type="radio" name="a4q2"> 11:00 AM</label>
+          <label><input type="radio" name="a4q2"> 1:00 PM</label></fieldset>
+        <fieldset><legend>3. Where will the event take place?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <fieldset><legend>4. Which room number is mentioned?</legend>
+          <input type="text" placeholder="Write your short answer here…"></fieldset>
+        <label class="cta" for="f4">↩ Back to Picture</label>
+        <a class="back" href="#wheel">← Back to Wheel</a>
+      </div>
+    </div></div>
+  </article>
+  <p class="next"><a class="btn" href="#mystery">Next: The Mystery Room 🎁 →</a></p>
+</section>
+</body>

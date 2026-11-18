@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classroom Activity Wheel 🎡</title>
+<link rel="stylesheet" href="./style (1).css">
+</head>
+
+<body>
+
+
+<!-- MYSTERY ROOM: same four activities as the wheel (flip once = content, flip twice = questions) -->
+<section id="mystery" class="mr">
+ <div class="mr-box">
+  <h2>🎁 THE MYSTERY ROOM</h2>
+  <p class="mr-sub">ONE BOX · FOUR SECRETS · ONE CHALLENGE</p>
+  <div class="mr-grid">
+  <!-- mystry1 -->
+<div class="mcard mc1">
+  <input type="checkbox" id="m1" class="sr m">
+  <input type="checkbox" id="mq1" class="sr qq">
+
+  <div class="mc">
+    <div class="mi">
+
+      <!-- FRONT: Mystery Card -->
+      <label class="mf mfront" for="m1">
+        <span class="gift">🎁</span>
+        <b>MYSTERY 01</b>
+        <small>Tap to reveal</small>
+      </label>
+
+      <!-- PHOTO STAGE -->
+      <div class="mf mreveal">
+        <span class="mtag">Listening Activity · Scanning Challenge</span>
+
+        <h4>Look at the picture!</h4>
+
+        <p class="instr">
+          Click on the picture to reveal the questions.
+        </p>
+
+        <label class="photo-next" for="mq1">
+          <img src="./public/mystry1.jpeg" alt="Shopping ingredients: rice, eggs, milk and sugar">
+          <span>👆 Click the photo to reveal questions</span>
+        </label>
+
+        <label class="mlink" for="m1">↩ Close box</label>
+      </div>
+
+      <!-- QUESTIONS STAGE -->
+      <div class="mf mqs">
+
+        <div class="win">
+          🎉 Let's Solve It!
+          <i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i>
+        </div>
+
+        <span class="mtag">Scanning · Find Specific Information</span>
+
+        <h4>Mystery 01 Questions</h4>
+
+        <p class="instr">
+          Listen carefully and find the specific quantities.
+        </p>
+
+        <h4 class="q1">
+          <legend>1. How much rice does his wife need?</legend>
+          
+        </h4>
+
+        <h4 class="q2">
+          <legend>2. How many eggs should he buy?</legend>
+          
+        </h4>
+         <h4 class="q"3>3. What is the quantity of milk?</h4>
+
+        <h4 class="q5">
+          <legend>5. Which technique have you just used to answer?</legend>
+        </h4>
+
+        <label class="mlink" for="mq1">
+          ↩ Back to Photo
+        </label>
+
+        <a class="mlink" href="#mystery">
+          Back to Mystery Room
+        </a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- card 2 -->
+  
+
+<div class="mcard mc2">
+
+  <!-- THREE CHECKBOXES CONTROL FOUR STAGES -->
+  <input type="checkbox" id="m2" class="sr m">
+  <input type="checkbox" id="mq2" class="sr qq">
+  <input type="checkbox" id="mq2q" class="sr qqq">
+
+  <div class="mc">
+    <div class="mi">
+
+      <!-- STAGE 1: MYSTERY BOX -->
+      <label class="mf mfront" for="m2">
+        <span class="gift">🎁</span>
+        <b>MYSTERY 02</b>
+        <small>Tap to reveal</small>
+      </label>
+
+      <!-- STAGE 2: PHOTO -->
+      <div class="mf mreveal">
+        <span class="mtag">Mystery Challenge · Reading Skills</span>
+
+        <h4>Something is hidden here!</h4>
+
+        <p class="instr">
+          Click the picture to discover your next challenge.
+        </p>
+
+        <label class="photo-next" for="mq2">
+          <img src="./public/mystrey2.jpeg" alt="Mystery 02 challenge">
+          <span>👆 Click the photo to continue</span>
+        </label>
+      </div>
+
+      <!-- STAGE 3: PASSAGE -->
+      <div class="mf mqs">
+        <span class="mtag">Passage-based · Skimming Challenge</span>
+
+        <h4>The Night-Before-Exam Student 😂</h4>
+
+        <p class="instr">
+          Imagine this situation. Read the passage and think about
+          the reading strategy being used.
+        </p>
+
+        <div class="passage-box">
+          <blockquote class="instr">
+            Your exam is tomorrow. You have 50 pages to read,
+            but only 5 minutes left. Will you read every single
+            word, or just try to understand what the text is
+            mainly about?
+          </blockquote>
+        </div>
+
+        <label class="mlink next-question" for="mq2q">
+          Next Question ➜
+        </label>
+      </div>
+
+      <!-- STAGE 4: FINAL QUESTION -->
+      <div class="mf question-stage">
+        <span class="mtag">Final Challenge · Mystery 02</span>
+
+        <h4 class="question-heading">Final Mystery Question ❓</h4>
+
+        <p class="instr">
+          What is this reading technique called?
+          Define it.
+        </p>
+
+        <div class="passage-box">
+          <b>Answer: Skimming</b>
+          <p class="instr">
+            Skimming is a reading technique in which we read
+            quickly to understand the main idea or general meaning
+            of a text without reading every word.
+          </p>
+        </div>
+
+        <a class="mlink" href="#mystery">
+          ↩ Back to Mystery Room
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <!-- card 3 -->
+  
+<div class="mcard mc2">
+
+  <!-- UNIQUE CHECKBOXES FOR MYSTERY 03 -->
+  <input type="checkbox" id="m3" class="sr m">
+  <input type="checkbox" id="mq3" class="sr qq">
+  <input type="checkbox" id="mq3q" class="sr qqq">
+
+  <div class="mc">
+    <div class="mi">
+
+      <!-- STAGE 1: MYSTERY BOX -->
+      <label class="mf mfront" for="m3">
+        <span class="gift">🎁</span>
+        <b>MYSTERY 03</b>
+        <small>Tap to reveal</small>
+      </label>
+
+      <!-- STAGE 2: PHOTO -->
+      <div class="mf mreveal">
+        <span class="mtag">Mystery Challenge · Reading Skills</span>
+
+        <h4>Something is hidden here!</h4>
+
+        <p class="instr">
+          Click the picture to discover your next challenge.
+        </p>
+
+        <label class="photo-next" for="mq3">
+          <img src="./public/mystry3.jpeg" alt="Mystery 03 challenge">
+          <span>👆 Click the photo to continue</span>
+        </label>
+      </div>
+
+      <!-- STAGE 3: PASSAGE -->
+      <div class="mf mqs">
+        <span class="mtag">Passage-based · Reading Challenge</span>
+
+        <h4>Facebook Post 🌍</h4>
+
+        <div class="passage-box">
+          <blockquote class="instr">
+            Climate change is affecting our planet. Rising
+            temperatures, floods and pollution threaten human
+            lives. Planting trees and reducing pollution can
+            help protect the environment.
+          </blockquote>
+        </div>
+
+        <p class="instr">
+          Read the post quickly and try to identify its main idea.
+        </p>
+
+        <label class="mlink next-question" for="mq3q">
+          Next Question ➜
+        </label>
+      </div>
+
+      <!-- STAGE 4: FINAL QUESTION -->
+      <div class="mf question-stage">
+        <span class="mtag">Final Challenge · Mystery 03</span>
+
+        <h4>Final Mystery Questions ❓</h4>
+
+        <p class="instr">
+          1. What is the post mainly about?
+        </p>
+
+        <p class="instr">
+          2. Which reading technique did you use to identify
+          the main idea?
+        </p>
+
+        <a class="mlink" href="#mystery">
+          ↩ Back to Mystery Room
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <!-- card 4 -->
+  
+
+<div class="mcard mc2 mc4">
+
+  <!-- UNIQUE CHECKBOXES FOR MYSTERY 04 -->
+  <input type="checkbox" id="m4" class="sr m">
+  <input type="checkbox" id="mq4" class="sr qq">
+
+  <div class="mc">
+    <div class="mi">
+
+      <!-- STAGE 1: MYSTERY BOX -->
+      <label class="mf mfront" for="m4">
+        <span class="gift">🎁</span>
+        <b>MYSTERY 04</b>
+        <small>Tap to reveal</small>
+      </label>
+
+      <!-- STAGE 2: PHOTO -->
+      <div class="mf mreveal">
+        <span class="mtag">Mystery Challenge · Reading Skills</span>
+
+        <h4>Something is hidden here!</h4>
+
+        <p class="instr">
+          Click the picture to discover your next challenge.
+        </p>
+
+        <label class="photo-next" for="mq4">
+          <img src="./public/mysrty4.jpeg" alt="Mystery 04 challenge">
+          <span>👆 Click the photo to continue</span>
+        </label>
+      </div>
+
+      <!-- STAGE 3: FINAL QUESTION -->
+      <div class="mf question-stage">
+        <span class="mtag">Final Challenge · Mystery 04</span>
+
+        <h4>What is this picture mainly about?</h4>
+
+        <h4>
+          Which reading technique did you just use to identify
+          the main idea?
+        </h4>
+
+        <a class="mlink" href="#mystery">
+          ↩ Back to Mystery Room
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+</section>
+
+
+<footer>Classroom Activity Wheel 🎡 · Read Smart. Find Fast. Learn Better.</footer>
+</body>
+</html>
